@@ -23,7 +23,8 @@ public class Timer : MonoBehaviour
         }
         else
         {
-            Time.timeScale = 0.0f; // 게임 멈춤
+            Debug.Log("시간 다 됨");
+            // Time.timeScale = 0.0f; // 게임 멈춤
         }
     }
 }
