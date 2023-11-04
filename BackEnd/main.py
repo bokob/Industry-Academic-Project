@@ -35,10 +35,53 @@ async def root():
     ref.update({"엄준식":"성공"})
     return {"message": "Hello World"}
 
+### 퀴즈 관련 함수 ###
+@app.get("/createMakeQuizList")
+async def createMakeQuizList(): # 퀴즈 스키마 만들기
+
+    d={
+        "quiz":{
+            "뉴트리아" : [],
+            "늑대거북" : [],
+            "악어거북" : [],
+            "플로리다붉은배거북" : [],
+            "리버쿠터" : [],
+            "중국줄무늬목거북" : [],
+            "붉은귀거북" : [],
+            "황소개구리" : [],
+            "배스" : [],
+            "브라운송어" : [],
+            "블루길" : [],
+            "갈색날개매미충" : [],
+            "긴다리비틀개미" : [],
+            "꽃매미" : [],
+            "등검은말벌" : [],
+            "미국선녀벌레" : [],
+            "붉은불개미" : [],
+            "빗살무늬미주메뚜기" : [],
+            "아르헨티나개미" : [],
+            "열대불개미" : [],
+            "미국가재" : []
+        }
+    }
+
+    for key in d["quiz"].keys(): 
+        d["quiz"][key].append(0)
+
+    
+    ref.update(d)
+
+    return d
+
+# @app.get("/addQuiz")
+# async def addQuiz():
+    
+#     return 
+
 
 @app.get("/image") # 파이어 베이스에서 이미지 불러오는 코드 (퀴즈용)
 async def getImage():
-    blob = bucket.blob('um.png')
+    blob = bucket.blob('um.png') # 엄준식 사진 가져오기
     image_data = blob.download_as_bytes()
 
     return StreamingResponse(io.BytesIO(image_data), media_type="image/png")
