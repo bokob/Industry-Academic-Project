@@ -384,8 +384,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC774 \uB3D9\uBB3C\uC758 \uC774\uB984\uC740 \n\uD50C\uB85C\uB9AC\uB2E4\uBD89\uC740\uBC30\uAC70\uBD81\uC774\uB2E4.\n\n\uC774\uB294
-    \uC0DD\uD0DC\uACC4 \uAD50\uB780\uC885\uC5D0 \uC18D\uD55C\uB2E4."
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cc11739a5e6b6f54fbc7231489c90790, type: 2}
   m_sharedMaterial: {fileID: 1985003219582884308, guid: cc11739a5e6b6f54fbc7231489c90790, type: 2}
@@ -412,15 +411,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 100
-  m_fontSizeBase: 100
+  m_fontSize: 85
+  m_fontSizeBase: 85
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -476,6 +475,7 @@ GameObject:
   - component: {fileID: 637722735}
   - component: {fileID: 637722740}
   - component: {fileID: 637722739}
+  - component: {fileID: 637722741}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -562,6 +562,7 @@ RectTransform:
   - {fileID: 543864149}
   - {fileID: 1406424703}
   - {fileID: 1122703007}
+  - {fileID: 1073187237}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -608,6 +609,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 637722734}
   m_CullTransparentMesh: 1
+--- !u!114 &637722741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637722734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a81e37a55774bc4bbf3258a46ef8161, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  quizImage: {fileID: 832186941}
+  questionText: {fileID: 543864150}
+  OBtn: {fileID: 1406424702}
+  XBtn: {fileID: 1122703006}
+  imageList:
+  - {fileID: 21300000, guid: dada1b8603f8a564284cf22731f14966, type: 3}
+  - {fileID: 21300000, guid: 592500f71ae5da841aaff5444f059555, type: 3}
+  - {fileID: 21300000, guid: b3bac48978da67c48ae72f4e77df5099, type: 3}
+  - {fileID: 21300000, guid: bdcd39d0c98b3e74bb2e0b893d4ee1fe, type: 3}
+  - {fileID: 21300000, guid: 7748c6e7059ada247944afd6d545c243, type: 3}
+  - {fileID: 21300000, guid: 2c685123cdf81c44fa879560533e6817, type: 3}
+  - {fileID: 21300000, guid: 13963115821dfad4ea43126a99ed6aff, type: 3}
+  - {fileID: 21300000, guid: e920d41a7980dfe449a89ea1dd3a2ad4, type: 3}
+  - {fileID: 21300000, guid: ed7cf14f3fe0c18459bd9c90a9d8ed3b, type: 3}
+  - {fileID: 21300000, guid: e2e8f1f2df7ccef4c8dfb224902ed7dd, type: 3}
+  - {fileID: 21300000, guid: 2b69d6a43f152814aa282329d245dbca, type: 3}
+  - {fileID: 21300000, guid: 9fb40ef77d2006a4895b4000fcc5e289, type: 3}
+  - {fileID: 21300000, guid: abcbcef36cd6e434dadea43a304de4b3, type: 3}
+  - {fileID: 21300000, guid: ddb20b951f84e714d9e7dd5df1f18e5e, type: 3}
+  - {fileID: 21300000, guid: 36cb219b0feaadf47aa7726af696d3b5, type: 3}
+  - {fileID: 21300000, guid: 96b7325f620aabd45abc4917a3ad6f69, type: 3}
+  - {fileID: 21300000, guid: 82c5a07031970fd468a70d5a0fdc36fc, type: 3}
+  - {fileID: 21300000, guid: 63a11d9177d519544a3fc33aaceede4c, type: 3}
+  - {fileID: 21300000, guid: 1f26ba899c27c18438e9b5ea17b6097c, type: 3}
+  - {fileID: 21300000, guid: 7c7611fed600cda44bb2a02718de79ef, type: 3}
+  - {fileID: 21300000, guid: 79e791dd614cbb1438364a84f3b85a4b, type: 3}
 --- !u!1 &832186939
 GameObject:
   m_ObjectHideFlags: 0
@@ -666,7 +705,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7c7611fed600cda44bb2a02718de79ef, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -684,6 +723,42 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 832186939}
   m_CullTransparentMesh: 1
+--- !u!1 &1073187236
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1073187237}
+  m_Layer: 5
+  m_Name: QuizLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1073187237
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1073187236}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 637722738}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1094010146
 GameObject:
   m_ObjectHideFlags: 0
