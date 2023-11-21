@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using System.Text;
+using System.IO;
 
 public class MyData // 딕셔너리 이용하면 오류 발생해서 리스트 2개로 해결
 {
     public List<string> date;
-    public List<int> count;
+    public List<int> answer;
 }
 
 
@@ -25,6 +26,8 @@ public class LoadGraphImage : MonoBehaviour
         StartCoroutine(SendQuizRecordJsonDataToServer());
     }
 
+    private string filePath;
+    private string quizResultFileName = "QuizResult.json";
     IEnumerator SendQuizRecordJsonDataToServer()
     {
         /* (곧 작성 예정)
@@ -32,27 +35,31 @@ public class LoadGraphImage : MonoBehaviour
             key 값과 value 값을 각각의 리스트로 담는 부분
         */
 
-        MyData jsonData = new MyData
+        filePath = Path.Combine(Application.persistentDataPath, quizResultFileName); // 파일 경로   
+
+        MyData graphInfo = new MyData();
+        graphInfo.date = new List<string>();
+        graphInfo.answer = new List<int>();
+
+        if (File.Exists(filePath)) // json이 존재하면
         {
-            date = new List<string>
+            string jsonData = File.ReadAllText(filePath);
+            QuizResultList quizResult = JsonUtility.FromJson<QuizResultList>(jsonData);
+
+            for(int i=0; i<quizResult.quizResultList.Count;i++)
             {
-                "11-12",
-                "11-13",
-                "11-14",
-                "11-15",
-                "11-16",
-                "11-17",
-                "11-18"
-            },
-            count = new List<int>
-            {
-                3,6,9,12,15,18,20
+                graphInfo.date.Add(quizResult.quizResultList[i].quizDate);
+                graphInfo.answer.Add(quizResult.quizResultList[i].answer);
             }
-        };
 
+        }
+        else // 저장된 파일이 없는 경우
+        {
+            graphInfo.date.Add("");
+            graphInfo.answer.Add(0);
+        }
 
-
-        string json = JsonUtility.ToJson(jsonData);
+        string json = JsonUtility.ToJson(graphInfo);
 
         // JSON 데이터를 FastAPI 서버로 POST 요청으로 보내기
         UnityWebRequest request = new UnityWebRequest(imageURL, "POST");

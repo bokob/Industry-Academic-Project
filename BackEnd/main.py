@@ -71,7 +71,7 @@ async def createMakeQuizList(): # 퀴즈 스키마 만들기
             "animal" : key,
             "problem" : s,
             "answer" : True,
-            "solution" : ""
+            "solution" : "생긴 그대로입니다."
             })
 
     ref.update(d)
@@ -136,7 +136,7 @@ async def getImage():
 ### 그래프 그리는 부분 ###
 class MyData(BaseModel):
     date: List[str]
-    count: List[int]
+    answer: List[int]
 
 def generate_graph(data): # 그래프 그리기
     # 그래프 생성
@@ -167,8 +167,8 @@ def generate_graph(data): # 그래프 그리기
 async def create_graph(data : MyData):
     # Access JSON data sent from Unity
     date = data.date
-    count = data.count
-    data_dict = dict(zip(date,count))
+    answer = data.answer
+    data_dict = dict(zip(date,answer))
 
     # Generate the graph
     image_data = generate_graph(data_dict)
