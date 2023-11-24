@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class AimTarget : MonoBehaviour
 {
@@ -11,6 +13,10 @@ public class AimTarget : MonoBehaviour
     public LayerMask targetLayer; // 포착 대상 레이어
     public string targetTag = "Animal";
 
+    public Slider progressbar;
+
+    public GameObject OkBtn;
+    Button okBtn;
 
     Dictionary<string, Action> animalActions = new Dictionary<string, Action>
     {
@@ -39,7 +45,8 @@ public class AimTarget : MonoBehaviour
 
     void Start()
     {
-
+        okBtn = OkBtn.GetComponent<Button>();
+        okBtn.onClick.AddListener(GameResultSave);
     }
 
     void Update()
@@ -74,6 +81,11 @@ public class AimTarget : MonoBehaviour
 
             // 포착 대상의 이름 출력
             Debug.Log("포착한 대상의 이름: " + hit.collider.gameObject.name);
+            
+            progressbar.value += 5f;
+
+            Debug.Log("성공률: " + progressbar.value);
+
             RecordingHuntingAnimal(hit.collider.gameObject.name);
         }
         else
@@ -105,5 +117,12 @@ public class AimTarget : MonoBehaviour
             }
         }
 
+    }
+
+    public void GameResultSave()
+    {
+        DataManager.Instance.Save();
+        Debug.Log("게임 결과가 저장되었어요~");
+        SceneManager.LoadScene("StageSelectionScene");
     }
 }

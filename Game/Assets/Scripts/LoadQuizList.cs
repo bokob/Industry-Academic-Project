@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 using System.IO; // 저장 등 파일 관리를 위해
 using System;
@@ -87,7 +88,7 @@ public class LoadQuizList : MonoBehaviour
 
         oBtn.onClick.AddListener(O);
         xBtn.onClick.AddListener(X);
-        okBtn.onClick.AddListener(Save);
+        okBtn.onClick.AddListener(QuizResultSave);
 
         yield return StartCoroutine(GetQuizList());
         Debug.Log("Start에서 출력");
@@ -230,16 +231,11 @@ public class LoadQuizList : MonoBehaviour
         DisplayCurrentQuiz();
     }
 
-
-
-
-
-
     // 퀴즈 저장 부분
     private string filePath;
     private string quizResultFileName = "QuizResult.json";
 
-    public void Save()
+    public void QuizResultSave()
     {
         filePath = Path.Combine(Application.persistentDataPath, quizResultFileName); // 파일 경로   
 
@@ -295,5 +291,7 @@ public class LoadQuizList : MonoBehaviour
 
             Debug.Log("저장 완료");
         }
+
+        SceneManager.LoadScene("MainScene");
     }
 }
