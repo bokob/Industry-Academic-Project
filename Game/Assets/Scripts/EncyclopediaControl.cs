@@ -23,6 +23,7 @@ public class EncyclopediaControl : MonoBehaviour
 
     void Prev()
     {
+        SoundManager.Instance.PlaySFX("click");
         Debug.Log("Prev 버튼 클릭");
 
         if (currentPage > 0)
@@ -43,6 +44,7 @@ public class EncyclopediaControl : MonoBehaviour
 
     void Next()
     {
+        SoundManager.Instance.PlaySFX("click");
         Debug.Log("Next 버튼 클릭");
 
         if (currentPage < pages.Length - 1)
@@ -71,6 +73,8 @@ public class EncyclopediaControl : MonoBehaviour
 
     public void ShowEncyclopediaAll(int pageIndex)
     {
+        SoundManager.Instance.PlaySFX("click");
+
         pages[pageIndex].SetActive(true);
 
         if(pageIndex!=0)
@@ -82,6 +86,8 @@ public class EncyclopediaControl : MonoBehaviour
 
     void HideEncyclopediaAll(int pageIndex)
     {
+        SoundManager.Instance.PlaySFX("click");
+
         pages[pageIndex].SetActive(false);
         prevBtn.SetActive(false);
         nextBtn.SetActive(false);
@@ -90,6 +96,8 @@ public class EncyclopediaControl : MonoBehaviour
 
     public void ShowAnimalInfo(GameObject animalInfo)
     {
+        SoundManager.Instance.PlaySFX("click");
+
         if(!animalInfo.activeSelf)
         {
             animalInfo.SetActive(true);

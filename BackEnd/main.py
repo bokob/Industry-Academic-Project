@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 
 from typing import List, Dict
 
+import random
 
 # Firebase database 인증 및 앱 초기화
 # Fetch the service account key JSON file contents
@@ -27,7 +28,6 @@ ref = db.reference() # RealTimeDataBase 위치 지정
 bucket = storage.bucket() # Storage
 
 app = FastAPI()
-
 
 @app.get("/test")
 async def root():
@@ -66,19 +66,18 @@ async def createMakeQuizList(): # 퀴즈 스키마 만들기
     }
 
     for key in d["quiz"].keys(): # null 값이 처음부터 들어갈 수 없어서 기초 동물별로 기초 질문 하나씩 넣기
-        s = "이 동물의 이름은 " + key +"(이)가 맞는가?"
+        s = "이 동물의 이름은\n\n" + key +"(이)가 맞는가?"
         d["quiz"][key].append({
-            "이미지":"",
-            "문제":s,
-            "답": True,
-            "해설":""
+            "animal" : key,
+            "problem" : s,
+            "answer" : True,
+            "solution" : "생긴 그대로입니다."
             })
 
     ref.update(d)
 
     return d
 
-### 퀴즈 추가
 class Quiz(BaseModel):
     animal: str
     img:str
@@ -86,16 +85,17 @@ class Quiz(BaseModel):
     answer: bool
     solution: str
 
+# 퀴즈 추가
 @app.post("/addQuiz")
 async def addQuiz(data : Quiz):
     animal = data.animal
     newQuiz = ref.get()
 
     quizData = {
-        "이미지":data.img,
-        "문제": data.problem,
-        "답":data.answer,
-        "해설":data.solution
+        "animal": animal,
+        "problem": data.problem,
+        "answer":data.answer,
+        "solution":data.solution
      }
     
     newQuiz['quiz'][animal].append(quizData)
@@ -104,6 +104,27 @@ async def addQuiz(data : Quiz):
 
     return newQuiz
 
+# 퀴즈 반환
+@app.get("/quiz")
+async def getQuiz():
+
+    tmp = ref.get()
+    keyList = list(tmp['quiz'].keys())
+    quizList=[]
+
+    while len(quizList)!=20:
+        randomKey = random.choice(keyList)
+        randomQuiz = random.choice(tmp['quiz'][randomKey])
+        if randomQuiz not in quizList: quizList.append(randomQuiz)
+
+    # 1. 파이어 베이스에서 퀴즈들을 가져온다.
+    # 2. 퀴즈 중에서 키값들을 리스트로 만들어서 keyList 변수를 만든다.
+    # 3. 랜덤으로 20개의 퀴즈를 가져온다.(중복 체크 해야함)
+    # 4. 유니티로 넘겨준다.
+    
+    r = {"quizList" : quizList}
+
+    return r
 
 @app.get("/image") # 파이어 베이스에서 이미지 불러오는 코드 (퀴즈용)
 async def getImage():
@@ -112,12 +133,10 @@ async def getImage():
 
     return StreamingResponse(io.BytesIO(image_data), media_type="image/png")
 
-
 ### 그래프 그리는 부분 ###
 class MyData(BaseModel):
     date: List[str]
-    count: List[int]
-
+    answer: List[int]
 
 def generate_graph(data): # 그래프 그리기
     # 그래프 생성
@@ -136,7 +155,6 @@ def generate_graph(data): # 그래프 그리기
     plt.xticks(fontsize=14)
     plt.yticks(range(0,20 + 1,2))
 
-    
     # 그래프를 이미지로 렌더링한 후 이진 데이터로 변환
     image_data = io.BytesIO()
     plt.savefig(image_data, format="png")
@@ -149,8 +167,8 @@ def generate_graph(data): # 그래프 그리기
 async def create_graph(data : MyData):
     # Access JSON data sent from Unity
     date = data.date
-    count = data.count
-    data_dict = dict(zip(date,count))
+    answer = data.answer
+    data_dict = dict(zip(date,answer))
 
     # Generate the graph
     image_data = generate_graph(data_dict)
