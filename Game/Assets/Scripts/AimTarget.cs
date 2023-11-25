@@ -17,8 +17,8 @@ public class AimTarget : MonoBehaviour
     public Slider progressbar;
     public TextMeshProUGUI progressbarText;
 
-    public GameObject OkBtn;
-    Button okBtn;
+    public GameObject OkBtn, ShootBtn;
+    Button okBtn, shootBtn;
 
     Dictionary<string, Action> animalActions = new Dictionary<string, Action>
     {
@@ -49,23 +49,32 @@ public class AimTarget : MonoBehaviour
     {
         okBtn = OkBtn.GetComponent<Button>();
         okBtn.onClick.AddListener(GameResultSave);
+
+
+        shootBtn = ShootBtn.GetComponent<Button>();
+        shootBtn.onClick.AddListener(Shoot);
     }
 
     void Update()
     {
         progressbarText.text = progressbar.value.ToString();
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            Shoot();
-        }
-        else
-        {
-            float x = joy.Horizontal;
-            float y = joy.Vertical;
+        // if(Input.GetKeyDown(KeyCode.Space))
+        // {
+        //     Shoot();
+        // }
+        // else
+        // {
+        //     float x = joy.Horizontal;
+        //     float y = joy.Vertical;
 
-            Vector3 moveDirection = new Vector3(x, y, 0);
-            transform.Translate(moveDirection * moveSpeed * Time.deltaTime);
-        }
+        //     Vector3 moveDirection = new Vector3(x, y, 0);
+        //     transform.Translate(moveDirection * moveSpeed * Time.deltaTime);
+        // }
+        float x = joy.Horizontal;
+        float y = joy.Vertical;
+
+        Vector3 moveDirection = new Vector3(x, y, 0);
+        transform.Translate(moveDirection * moveSpeed * Time.deltaTime);
     }
 
     private void Shoot()
