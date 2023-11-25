@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class AimTarget : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class AimTarget : MonoBehaviour
     public string targetTag = "Animal";
 
     public Slider progressbar;
+    public TextMeshProUGUI progressbarText;
 
     public GameObject OkBtn;
     Button okBtn;
@@ -51,6 +53,7 @@ public class AimTarget : MonoBehaviour
 
     void Update()
     {
+        progressbarText.text = progressbar.value.ToString();
         if(Input.GetKeyDown(KeyCode.Space))
         {
             Shoot();
@@ -67,6 +70,8 @@ public class AimTarget : MonoBehaviour
 
     private void Shoot()
     {
+        SoundManager.Instance.PlaySFX("gunshot");
+        
         Debug.Log("뒤져랏!");
         
         // 조준 경향 위치 설정 (2D 화면에서는 Z 축 값이 중요하지 않음)

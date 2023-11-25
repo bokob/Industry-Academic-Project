@@ -12,6 +12,7 @@ public class SwitchScene : MonoBehaviour
     public string sceneName;
     public void NextSceneWithString()
     {
+        SoundManager.Instance.PlaySFX("click");
         SceneManager.LoadScene(sceneName);
     }
 }

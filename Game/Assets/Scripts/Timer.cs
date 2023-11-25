@@ -7,7 +7,7 @@ public class Timer : MonoBehaviour
 {
     public AimTarget aimTarget;
     private bool isScriptEnabled = true;
-    public float timeLimit = 60.0f;
+    public float timeLimit = 30.0f;
     private float currentTime;
     private TextMeshProUGUI timerText;
 
@@ -27,7 +27,7 @@ public class Timer : MonoBehaviour
     {
         if (isScriptEnabled)
         {
-            if(aimTarget.progressbar.value == 100)
+            if( (timerText.text == "0" && aimTarget.progressbar.value >= 70) || aimTarget.progressbar.value == 100 )
             {
                 Debug.Log("성공");
                 resultPanel.SetActive(true);

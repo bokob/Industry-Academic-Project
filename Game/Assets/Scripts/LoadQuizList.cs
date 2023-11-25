@@ -46,9 +46,10 @@ public class LoadQuizList : MonoBehaviour
     public TextMeshProUGUI questionText;
     public GameObject OBtn, XBtn, OkBtn;
     Button oBtn, xBtn,okBtn;
-    public GameObject solutionPanel, solution;
+    public GameObject solutionPanel, solution, oxEffect;
 
     public Sprite[] imageList;
+    public Sprite[] oxList;
     public int currentQuizIndex = 0;
     int answer = 0;
 
@@ -98,12 +99,14 @@ public class LoadQuizList : MonoBehaviour
 
     void O()
     {
+        SoundManager.Instance.PlaySFX("click");
         // Debug.Log("O 버튼 클릭");
         StartCoroutine(checkAnswer(true));
     }
 
     void X()
     {
+        SoundManager.Instance.PlaySFX("click");
         // Debug.Log("X 버튼 클릭");
         StartCoroutine(checkAnswer(false));
     }
@@ -119,32 +122,32 @@ public class LoadQuizList : MonoBehaviour
         Debug.Log(receivedQuizList.quizList[currentQuizIndex].problem);
         Debug.Log(receivedQuizList.quizList[currentQuizIndex].answer);
 
-        // bool result;
+        bool isOX;
 
         if(select == receivedQuizList.quizList[currentQuizIndex].answer) // 정답
         {
             answer++;
-            // result = true;
+            isOX = true;
             Debug.Log("정답!");
             currentQuizIndex++;
         }
         else // 오답
         {
-            // result = false;
+            isOX = false;
             Debug.Log("오답!");
             currentQuizIndex++;
         }
 
-        // 해설 5초간
+        // 해설 4초간
         oBtn.interactable = false;
         xBtn.interactable = false;
 
-        StartCoroutine(DisplaySolutionForSeconds(receivedQuizList.quizList[currentQuizIndex-1].solution, 4f));
+        StartCoroutine(DisplaySolutionForSeconds(receivedQuizList.quizList[currentQuizIndex-1].solution, 4f, isOX));
         Debug.Log("현재 인덱스: " + currentQuizIndex);
 
         if(currentQuizIndex==20)
         {   
-            yield return StartCoroutine(DisplaySolutionForSeconds(receivedQuizList.quizList[currentQuizIndex-1].solution, 4f));
+            yield return StartCoroutine(DisplaySolutionForSeconds(receivedQuizList.quizList[currentQuizIndex-1].solution, 4f, isOX));
             
             foreach(Transform child in transform)
             {
@@ -213,20 +216,26 @@ public class LoadQuizList : MonoBehaviour
         return animalNum;
     }
 
-    IEnumerator DisplaySolutionForSeconds(string message, float seconds)
+    IEnumerator DisplaySolutionForSeconds(string message, float seconds, bool isOX)
     {
         TextMeshProUGUI tmp;
         tmp = solution.GetComponent<TextMeshProUGUI>();
 
+        Image ox = oxEffect.GetComponent<Image>(); 
+        
+        ox.sprite = isOX ? oxList[1] : oxList[0];
+
         // 문구를 표시합니다.
         tmp.text = message;
         solutionPanel.gameObject.SetActive(true);
+        oxEffect.SetActive(true);
 
         // 일정 시간 동안 대기합니다.
         yield return new WaitForSeconds(seconds);
 
         // 대기 후 문구를 숨깁니다.
         solutionPanel.gameObject.SetActive(false);
+        oxEffect.SetActive(false);
 
         DisplayCurrentQuiz();
     }
@@ -261,9 +270,29 @@ public class LoadQuizList : MonoBehaviour
             QuizResultItem newQuizResultItem = new QuizResultItem();
             DateTime currentDate = DateTime.Today; // 현재 날짜
             string dateString = currentDate.ToString("MM-dd");
-            newQuizResultItem.quizDate = dateString;
-            newQuizResultItem.answer = answer;
-            quizResult.quizResultList.Add(newQuizResultItem);
+
+            // 이미 해당 날짜에 대한 퀴즈 결과가 있는지 확인
+            // 날짜 리스트 생성
+            List<string> dateList = new List<string>(); 
+            foreach(QuizResultItem item in quizResult.quizResultList)
+            {
+                dateList.Add(item.quizDate);
+            }
+
+            if(dateList.Contains(dateString)) // 이미 퀴즈 결과가 있다면
+            {
+                foreach(QuizResultItem item in quizResult.quizResultList)
+                {
+                    if(item.quizDate == dateString && item.answer < answer)
+                        item.answer = answer;
+                }
+            }
+            else // 퀴즈 결과가 없다면
+            {
+                newQuizResultItem.quizDate = dateString;
+                newQuizResultItem.answer = answer;
+                quizResult.quizResultList.Add(newQuizResultItem);
+            }
 
             // 2. 저장
             string updatedJsonData = JsonUtility.ToJson(quizResult, true); // json으로 변환
