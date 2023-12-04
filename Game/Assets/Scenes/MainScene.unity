@@ -1024,6 +1024,10 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: a4b31eebfa8e46248957bf4244b2cfa4, type: 3}
   - name: click
     clip: {fileID: 8300000, guid: 9e68ce490fc103e4c981553227940aa4, type: 3}
+  - name: correct
+    clip: {fileID: 8300000, guid: 7377cf4dc0f9e2348b297777846a8aaf, type: 3}
+  - name: wrong
+    clip: {fileID: 8300000, guid: 7d13455bc6545d44ab2204c66cecdac2, type: 3}
   musicSource: {fileID: 1490767718}
   sfxSource: {fileID: 519749389}
   defaultBGM: {fileID: 8300000, guid: 4d8f5caf59a5d8140840a30b8ad2b4df, type: 3}

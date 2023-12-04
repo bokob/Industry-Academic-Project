@@ -50,7 +50,6 @@ public class AimTarget : MonoBehaviour
         okBtn = OkBtn.GetComponent<Button>();
         okBtn.onClick.AddListener(GameResultSave);
 
-
         shootBtn = ShootBtn.GetComponent<Button>();
         shootBtn.onClick.AddListener(Shoot);
     }
