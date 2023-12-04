@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class LoadAnimalImage : MonoBehaviour
 {
-    private string imageURL = "http://127.0.0.1:8000/image";
+    private string imageURL = "http://3.35.4.66/image";
     public RawImage img;
 
     // Start is called before the first frame update

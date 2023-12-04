@@ -2822,6 +2822,7 @@ MonoBehaviour:
   progressbar: {fileID: 1417602250}
   progressbarText: {fileID: 1008886311}
   OkBtn: {fileID: 1153760581}
+  ShootBtn: {fileID: 869331553}
 --- !u!58 &1880866242
 CircleCollider2D:
   m_ObjectHideFlags: 0

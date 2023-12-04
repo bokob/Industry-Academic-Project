@@ -77,7 +77,7 @@ public class LoadQuizList : MonoBehaviour
         "황소개구리"
     };
 
-    string url = "http://127.0.0.1:8000/quiz";
+    string url = "http://3.35.4.66/quiz";
 
     QuizList receivedQuizList = new QuizList();
 
@@ -129,11 +129,13 @@ public class LoadQuizList : MonoBehaviour
             answer++;
             isOX = true;
             Debug.Log("정답!");
+            SoundManager.Instance.PlaySFX("correct");
             currentQuizIndex++;
         }
         else // 오답
         {
             isOX = false;
+            SoundManager.Instance.PlaySFX("wrong");
             Debug.Log("오답!");
             currentQuizIndex++;
         }
