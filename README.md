@@ -17,9 +17,6 @@ Python
 FastAPI
 - 0.103.1
 
-Django
-- 4.2.3
-
 Nginx
 - 1.24.0
 
